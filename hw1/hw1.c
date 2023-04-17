@@ -36,14 +36,12 @@ struct fdLogInfo{
     int filter;
 };
 
-static struct blackList *open_blacklist = NULL,
-            *getaddrinfo_blacklist = NULL;
-
+static struct blackList *open_blacklist = NULL;
+static struct blackList *getaddrinfo_blacklist = NULL;
 static struct connectBlackList *connect_blacklist = NULL;
 static struct fdLogInfo *fd_list = NULL;
-
-static int logger_fd = 1;
 static char read_blacklist[100];
+static int logger_fd = 1;
 
 void loggerSetup(){
     char *env = getenv("LOGGER_FD");
@@ -505,10 +503,10 @@ void parseELF(){
 }
 
 void init(){
-    configSetup();
-    loggerSetup();
     getMainBase();
     parseELF();
+    configSetup();
+    loggerSetup();
 }
 
 static int (*main_orig)(int, char **, char **);
